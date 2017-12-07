@@ -105,9 +105,8 @@ consultarCliente(){
 	
 	CadastroCliente = fopen ("CadastroCliente.txt" , "r");	
 	char nomeCliente[35];
-	int idCliente;
 	while (fgets(nomeCliente, 35, CadastroCliente) != NULL );{
-		printf ("%s, %i", nomeCliente);
+		printf ("%s", nomeCliente);
 	}
 	fclose(CadastroCliente);
 	
