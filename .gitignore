@@ -1,52 +1,229 @@
-# Prerequisites
-*.d
 
-# Object files
-*.o
-*.ko
-*.obj
-*.elf
 
-# Linker output
-*.ilk
-*.map
-*.exp
+#include <stdio.h>
+#include <stdlib.h>
+#include <conio.h>
+#include <locale.h>
 
-# Precompiled Headers
-*.gch
-*.pch
 
-# Libraries
-*.lib
-*.a
-*.la
-*.lo
+struct Produto {
+	int idProduto;
+	char nomeProduto[35], descricao[200];
+	float preco;
+};
 
-# Shared objects (inc. Windows DLLs)
-*.dll
-*.so
-*.so.*
-*.dylib
+struct Cliente {
+	int idCliente, telefone;
+	char nomeCliente[15], email[30];
+	
+};
 
-# Executables
-*.exe
-*.out
-*.app
-*.i*86
-*.x86_64
-*.hex
+struct Pedido {
+	int id_produto, id_cliente;
+}; 
 
-# Debug files
-*.dSYM/
-*.su
-*.idb
-*.pdb
+int opcao, idCliente, idProduto, idPedido;
+float preco;
+FILE *CadastroCliente;
+FILE *CadastroPedido;
+FILE *CadastroProduto;
 
-# Kernel Module Compile Results
-*.mod*
-*.cmd
-.tmp_versions/
-modules.order
-Module.symvers
-Mkfile.old
-dkms.conf
+
+
+InserirCliente(){
+	int idCliente, telefone;
+	char nomeCliente[35], email[30];
+	
+	
+	printf("Insira os dados do cliente:  \n");
+	printf("id:   \n");
+	scanf ("%i", &idCliente);
+	printf("Nome:   \n");
+	scanf ("%s", &nomeCliente);
+	printf("E-mail:  \n");
+	scanf("%s", &email);
+	printf("Telefone:  \n");
+	scanf ("%i", &telefone);
+	printf ("Cliente cadastrado com sucesso!!");
+	getch();
+	
+		
+		CadastroCliente = fopen ("CadastroCliente.txt" , "a");
+		fprintf (CadastroCliente, "\n\nCADASTRO\nNome: %s\n ID: %i\nE-mail: %s\nTelefone: %i ", nomeCliente, idCliente, email, telefone); 
+		fclose (CadastroCliente);
+	
+}	
+
+InserirPedido(){
+	printf("Insira os dados do pedido:  \n");
+	printf("ID Produto:  \n");
+	scanf ("%i", &idProduto);
+	printf("ID Cliente:  \n");
+	scanf("%i", &idCliente);
+	idPedido = (idProduto + idCliente);
+	printf ("O ID do pedido é  %i\n", idPedido);
+	printf("Pedido Cadastrado com Sucesso!!");
+	
+	
+		CadastroPedido = fopen ("CadastroPedido.txt" , "a");
+		fprintf (CadastroPedido, "\n\nCADASTRO\nID Produto: %i\nID Cliente: %i\n", idProduto, idCliente); 
+		fclose (CadastroPedido);
+}
+inserirProduto(){
+	int idProduto;
+	char nomeProduto[35], descricao[200];
+	float preco;
+	
+	printf("Insira os dados do produto:  \n");
+	printf("ID Produto:  ");
+	scanf ("%i", &idProduto);
+	printf("Nome:  ");
+	scanf("%s", nomeProduto);
+	printf("Descrição:  ");
+	scanf("%s", descricao);
+	printf("Preço:  ");
+	scanf ("%f", &preco);
+	
+	
+		CadastroProduto = fopen ("CadastroProduto.txt" , "a");
+		fprintf (CadastroProduto, "\n\nCADASTRO\nNome: %s\n ID: %i\nDescrição: %s\nPreço: %f ", nomeProduto, idProduto, descricao, preco); 
+		fclose (CadastroProduto);
+}
+
+
+
+alterarCliente(){
+	
+}
+alterarPedido(){
+}
+alterarProduto(){
+}
+
+consultarCliente(){
+	
+	
+	CadastroCliente = fopen ("CadastroCliente.txt" , "r");	
+	char nomeCliente[35];
+	int idCliente;
+	while (fgets(nomeCliente, 35, CadastroCliente) != NULL );{
+		printf ("%s, %i", nomeCliente);
+	}
+	fclose(CadastroCliente);
+	
+}
+consultarPedido(){
+	
+	CadastroPedido = fopen ("CadastroPedido.txt" , "r");	
+	fscanf (CadastroPedido, "%i %i", idProduto, idCliente);
+	printf ("%i, %i", idProduto, idCliente );
+	fclose (CadastroPedido);
+}
+consultarProduto(){ 
+	char nomeProduto, descricao;
+	
+	CadastroProduto = fopen ("CadastroProduto.txt", "r");
+	fscanf (CadastroProduto, "%s, %i, %s, %f", nomeProduto, idProduto, descricao, preco);
+	printf ("%s, %i, %s, %f", nomeProduto, idProduto, descricao, preco);
+	fclose (CadastroProduto);
+
+}
+deletarCliente(){
+}
+deletarPedido(){
+}
+deletarProduto(){ 
+}
+
+
+ main (){
+		
+	setlocale (LC_ALL, "portuguese");
+  
+	printf ("======== MENU ========\n");
+	printf ("CONTROLE DE ESTOQUE\n");
+	printf ("1- Inserir Cliente\n");
+	printf ("2- Inserir Pedido\n");
+	printf ("3- Inserir Produto\n");
+	printf ("4- Consultar Cliente\n");
+	printf ("5- Consultar Pedido\n");
+	printf ("6- Consultar Produto\n");
+	printf ("7- Alterar Cliente\n");
+	printf ("8- Alterar Pedido\n");
+	printf ("9- Alterar Produto\n");
+	printf ("10- Deletar Cliente\n");
+	printf ("11- Deletar Pedido\n");
+	printf ("12- Deletar Produto\n");
+	printf ("13- SAIR\n");
+	printf ("======================\n");
+	
+	scanf ("%i", &opcao);
+	
+	switch (opcao)
+	{
+		case 1: 
+			InserirCliente(); 
+			break;
+			
+		case 2:
+			InserirPedido();
+			break;
+			
+		case 3:
+			 inserirProduto();
+			break;
+			
+		case 4:
+		 consultarCliente ();
+			break;
+			
+		case 5:
+			 consultarPedido();
+			break;	
+		case 6:
+			 consultarProduto();
+			break;
+			
+		case 7:
+		 alterarCliente();
+			break;
+			
+		case 8:
+		 alterarPedido();
+			break;
+			
+		case 9:
+			 alterarProduto();
+			break;
+			
+		case 10:
+			 deletarCliente();
+			break;
+			
+		case 11:
+		 deletarPedido();
+			break;
+			
+		case 12:
+			 deletarProduto();
+			break;
+			
+		case 13:
+			getch();
+			break;
+			
+		default:
+			printf ("\nComando inválido!!!");	
+			
+			break;
+				
+	}
+
+
+}
+
+
+	
+
+
+
